@@ -2,11 +2,13 @@ import NextAuth from "next-auth"
 import SpotifyProvider from "next-auth/providers/spotify"
 
 export const authOptions = {
+    debug: process.env.DEBUG === 'true',
     providers: [
         SpotifyProvider({
             clientId: process.env.SPOTIFY_CLIENT_ID!,
             clientSecret: process.env.SPOTIFY_CLIENT_SECRET!,
-        })
+
+        }),
     ],
     callbacks: {
         // @ts-ignore
