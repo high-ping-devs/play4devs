@@ -1,60 +1,43 @@
-import { useSession, signIn, signOut } from "next-auth/react"
-import { useState } from "react"
+import { useSpotifyPlaylist, useSpotifyProfile, useSpotifyTracks, useSpotifyUserPlaylists } from "@/hooks/spotify"
+import { signIn, signOut } from "next-auth/react"
 
 export default function Component() {
-  const { data } = useSession()
-  const user = data?.user
+  const profile = useSpotifyProfile()
+  const [usersPlaylists, usersPlaylistsError] = useSpotifyUserPlaylists(1, 0)
+  const [tracks, tracksError] = useSpotifyTracks('0A6utctOZywAbYz2xwULAd', 5, 0)
+  const [playlist, playlistError] = useSpotifyPlaylist('0A6utctOZywAbYz2xwULAd')
 
-  const [playlists, setPlaylists] = useState<{
-    items: any[]
-  }>()
-
-  const [selectedPlaylist, setSelectedPlaylist] = useState<any>()
-  const [selectedPlaylistTracks, setSelectedPlaylistTracks] = useState<any>()
-
-  const userPlaylists = async () => {
-    const res = await fetch('/api/spotify/user-playlists?limit=2&offset=0')
-
-    setPlaylists(await res.json())
-  }
-
-  const selectPlaylist = async (playlistId: string) => {
-    const res = await fetch(`/api/spotify/playlist?id=${playlistId}`)
-    setSelectedPlaylist(await res.json())
-  }
-
-  const selectPlaylistTracks = async (playlistId: string) => {
-    const res = await fetch(`/api/spotify/tracks?id=${playlistId}&limit=5&offset=0`)
-    setSelectedPlaylistTracks(await res.json())
-  }
-
-  if (user) {
+  if (profile) {
     return (
       <>
-        Signed in as {user?.email ?? 'Unknown'} <br />
-        <img src={user?.image!} alt={user?.name!} />
+        <h1>
+          Signed in as {profile.name}
+        </h1>
+
+        <img src={profile.image} alt={profile.name} />
+
+        <p>{profile.email}</p>
+        <p>{profile.id}</p>
+
         <button onClick={() => signOut()}>Sign out</button>
 
-        <button onClick={() => userPlaylists()}>Get Playlists</button>
+        <details>
+          <summary>Playlists</summary>
+          <img src={!usersPlaylistsError ? usersPlaylists?.items[0].images[0].url : ''} alt="" />
+          <pre>{!usersPlaylistsError && JSON.stringify(usersPlaylists, null, 2)}</pre>
+        </details>
 
-        <h2>Playlists</h2>
-        <pre>
-          {JSON.stringify(playlists, null, 2)}
-        </pre>
+        <details>
+          <summary>Tracks</summary>
+          <audio controls src={!tracksError ? tracks?.items[1].track?.preview_url! : ''}></audio>
 
-        <button onClick={() => selectPlaylist('0A6utctOZywAbYz2xwULAd')}>Select Playlist</button>
+          <pre>{!tracksError && JSON.stringify(tracks, null, 2)}</pre>
+        </details>
 
-        <h2>Selected playlist</h2>
-        <pre>
-          {JSON.stringify(selectedPlaylist, null, 2)}
-        </pre>
-
-        <button onClick={() => selectPlaylistTracks('0A6utctOZywAbYz2xwULAd')}>Select Playlist Tracks</button>
-
-        <h2>Selected playlist tracks</h2>
-        <pre>
-          {JSON.stringify(selectedPlaylistTracks, null, 2)}
-        </pre>
+        <details>
+          <summary>Playlist</summary>
+          <pre>{!playlistError && JSON.stringify(playlist, null, 2)}</pre>
+        </details>
       </>
     )
   }
