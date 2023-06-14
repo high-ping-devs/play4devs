@@ -3,9 +3,9 @@ import { signIn, signOut } from "next-auth/react"
 
 export default function Component() {
   const profile = useSpotifyProfile()
-  const [usersPlaylists, usersPlaylistsError] = useSpotifyUserPlaylists(1, 0)
-  const [tracks, tracksError] = useSpotifyTracks('0A6utctOZywAbYz2xwULAd', 5, 0)
-  const [playlist, playlistError] = useSpotifyPlaylist('0A6utctOZywAbYz2xwULAd')
+  // const [usersPlaylists, usersPlaylistsError] = useSpotifyUserPlaylists(1, 0)
+  // const [tracks, tracksError] = useSpotifyTracks('0A6utctOZywAbYz2xwULAd', 5, 0)
+  // const [playlist, playlistError] = useSpotifyPlaylist('0A6utctOZywAbYz2xwULAd')
 
   if (profile) {
     return (
@@ -20,7 +20,7 @@ export default function Component() {
         <p>{profile.id}</p>
 
         <button onClick={() => signOut()}>Sign out</button>
-
+        {/* 
         <details>
           <summary>Playlists</summary>
           <img src={!usersPlaylistsError ? usersPlaylists?.items[0].images[0].url : ''} alt="" />
@@ -37,7 +37,7 @@ export default function Component() {
         <details>
           <summary>Playlist</summary>
           <pre>{!playlistError && JSON.stringify(playlist, null, 2)}</pre>
-        </details>
+        </details> */}
       </>
     )
   }
