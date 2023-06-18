@@ -1,10 +1,10 @@
+import { getAuth0UserInfo } from "@/utils/getAuth0UserInfo"
+import { getSession } from "@auth0/nextjs-auth0"
 import { NextApiRequest, NextApiResponse } from "next"
-import { getServerSession } from "next-auth"
-import { authOptions } from "../auth/[...nextauth]"
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method === 'GET') {
-        const session = await getServerSession(req, res, authOptions)
+        const session = await getSession(req, res)
 
         if (!session) {
             return res.status(401).json({ error: 'Unauthorized' })
@@ -14,7 +14,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
         const spotifyApiResponse = await fetch(requestURL, {
             headers: {
-                Authorization: 'Bearer ' + session.accessToken,
+                Authorization: 'Bearer ' + (await getAuth0UserInfo(session)).identities?.find((identity: { connection: string }) => identity.connection === 'spotify')?.access_token
             }
         })
 
