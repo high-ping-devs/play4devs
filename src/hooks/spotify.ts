@@ -80,12 +80,28 @@ export function useSpotifyUserPlaylists(limit: number, offset: number) {
 }
 
 export function useSpotifyProfile() {
-    const session = useSession();
 
-    return session.data?.user as {
-        name: string;
-        email: string;
-        image: string;
-        id: string;
-    };
+    const [profile, setProfile] = useState<any>();
+    const [error, setError] = useState<string | undefined>();
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const res = await fetch(`/api/spotify/profile`);
+
+                if (res.ok) {
+                    setProfile(await res.json());
+                    setError(undefined);
+                } else {
+                    setError(`Error: ${res.status} - ${await res.text()}`);
+                }
+            } catch (error: any) {
+                setError(`Error: ${error.message}`);
+            }
+        };
+
+        fetchData();
+    }, [])
+
+    return [profile, error] as [typeof profile, typeof error];
 }

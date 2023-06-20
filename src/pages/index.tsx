@@ -1,36 +1,38 @@
-import { useSpotifyPlaylist, useSpotifyProfile, useSpotifyTracks, useSpotifyUserPlaylists } from "@/hooks/spotify"
-import { signIn, signOut } from "next-auth/react"
+import { useSpotifyUserPlaylists, useSpotifyTracks, useSpotifyPlaylist, useSpotifyProfile } from "@/hooks/spotify";
+import { useUser } from "@auth0/nextjs-auth0/client";
 
 export default function Component() {
-  const profile = useSpotifyProfile()
   const [usersPlaylists, usersPlaylistsError] = useSpotifyUserPlaylists(1, 0)
   const [tracks, tracksError] = useSpotifyTracks('0A6utctOZywAbYz2xwULAd', 5, 0)
   const [playlist, playlistError] = useSpotifyPlaylist('0A6utctOZywAbYz2xwULAd')
+  const [spotifyProfile, spotifyProfileError] = useSpotifyProfile()
 
-  if (profile) {
+  const { user, error, isLoading } = useUser()
+
+  if (isLoading) return <div>Loading...</div>
+  if (error) return <div>{error.message}</div>
+
+  if (user) {
     return (
       <>
         <h1>
-          Signed in as {profile.name}
+          Signed in as {user.name}
         </h1>
 
-        <img src={profile.image} alt={profile.name} />
+        <p>{user.email}</p>
 
-        <p>{profile.email}</p>
-        <p>{profile.id}</p>
+        {spotifyProfile && <img src={spotifyProfile.images[0] ? spotifyProfile.images[0].url : user.picture} alt="alt" />}
 
-        <button onClick={() => signOut()}>Sign out</button>
+        <a href="/api/auth/logout">Sign out</a>
 
         <details>
           <summary>Playlists</summary>
-          <img src={!usersPlaylistsError ? usersPlaylists?.items[0].images[0].url : ''} alt="" />
           <pre>{!usersPlaylistsError && JSON.stringify(usersPlaylists, null, 2)}</pre>
         </details>
 
         <details>
           <summary>Tracks</summary>
           <audio controls src={!tracksError ? tracks?.items[1].track?.preview_url! : ''}></audio>
-
           <pre>{!tracksError && JSON.stringify(tracks, null, 2)}</pre>
         </details>
 
@@ -44,7 +46,9 @@ export default function Component() {
   return (
     <>
       Not signed in <br />
-      <button onClick={() => signIn()}>Sign in</button>
+      <a href="/api/auth/login">Sign in</a>
     </>
   )
+
+
 }
