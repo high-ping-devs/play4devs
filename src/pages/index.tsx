@@ -5,6 +5,9 @@ import {
   useSpotifyProfile,
 } from "@/hooks/spotify";
 import { useUser } from "@auth0/nextjs-auth0/client";
+import Login from "./login";
+import PlaylistPreview from "@/components/PlaylistPreview";
+import Header from "@/components/Header";
 
 export default function Component() {
   const [usersPlaylists, usersPlaylistsError] = useSpotifyUserPlaylists(1, 0);
@@ -24,12 +27,56 @@ export default function Component() {
   if (error) return <div>{error.message}</div>;
 
   if (user) {
+    const playlists = [
+      {
+        img: "https://images.unsplash.com/photo-1546527868-ccb7ee7dfa6a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
+        username: "User 1",
+        name: "Playlist 1 gchghgkckhgfkhgghfkfkghjlgjkghjhkjgk",
+      },
+      {
+        img: "https://images.unsplash.com/photo-1546527868-ccb7ee7dfa6a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
+        username: "User 2",
+        name: "Playlist 2",
+      },
+      {
+        img: "https://images.unsplash.com/photo-1546527868-ccb7ee7dfa6a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
+        username: "User 3",
+        name: "Playlist 3",
+      },
+      {
+        img: "https://images.unsplash.com/photo-1546527868-ccb7ee7dfa6a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
+        username: "User 4",
+        name: "Playlist 4",
+      },
+    ];
     return (
       <>
-        <h1>Signed in as {user.name}</h1>
+        <Header />
+        <h1 className="flex justify-between px-3 mb-5">
+          <span className="text-lg font-semibold self-center">
+            Descubra playlists dos seus colegas ao redor do mundo
+          </span>
+          <img width={88} height={1} src="/assets/logo.svg" alt="Logo" />
+        </h1>
+        <div className="flex">
+          <input type="text" id="input" placeholder="Procurando algo?" className="w-full border-2 rounded-md p-2 mx-3 text-gray text-sm" />
+        </div>
+        <div>Gêneros</div>
 
-        <p>{user.email}</p>
+        <ul className="flex flex-wrap gap-y-5 mx-5 justify-center">
+          {playlists &&
+            playlists.map((playlist, index) => (
+              <li key={index} className="w-40">
+                <PlaylistPreview
+                  imgUrl={playlist.img}
+                  username={playlist.username}
+                  playlistName={playlist.name}
+                />
+              </li>
+            ))}
+        </ul>
 
+        {/* Usado para testes */}
         {spotifyProfile && (
           <img
             src={
@@ -63,6 +110,21 @@ export default function Component() {
           <summary>Playlist</summary>
           <pre>{!playlistError && JSON.stringify(playlist, null, 2)}</pre>
         </details>
+
+        <style jsx>
+          {`
+            input {
+              background: url("/assets/Search.svg") no-repeat scroll 7px 7px;
+              padding-left: 30px;
+            }
+          `}
+        </style>
+      </>
+    );
+  } else {
+    return (
+      <>
+        <Login />
       </>
     );
   }
