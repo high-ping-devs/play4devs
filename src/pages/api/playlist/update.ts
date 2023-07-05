@@ -7,7 +7,7 @@ import { IPlaylist } from "./create"
 
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-    if (req.method === 'PATCH') {
+    if (req.method === 'PUT') {
         await dbConnect();
 
         const session = await getSession(req, res);
