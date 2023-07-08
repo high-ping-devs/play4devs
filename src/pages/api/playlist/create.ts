@@ -22,14 +22,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             return res.status(401).json({ error: 'Unauthorized' });
         }
 
-        const { name, url, cover, tracks } = req.body as {
+        const { name, url, tracks } = req.body as {
             name: string,
             url: string,
-            cover: string,
             tracks: string[],
         };
 
-        if (!name || !url || !cover || !tracks) {
+        if (!name || !url || !tracks) {
             return res.status(400).json({ error: 'Please provide all required fields' });
         }
 
