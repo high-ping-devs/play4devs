@@ -33,13 +33,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const user = await User.findOne({ auth0Id: session.user.sub });
 
         if (!user) {
-            return res.status(400).json({ error: 'User not found' });
+            return res.status(404).json({ error: 'User not found' });
         }
 
         const existingPlaylist = await Playlist.findOne({ userId: user._id });
 
         if (existingPlaylist) {
-            return res.status(400).json({ error: 'Playlist already exists' });
+            return res.status(409).json({ error: 'Playlist already exists' });
         }
 
         const playlist: IPlaylist = {
@@ -56,4 +56,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
         return res.status(201).json({ playlist: newPlaylist });
     }
+
+    return res.status(405).json({ error: 'Method not allowed' });
 }
