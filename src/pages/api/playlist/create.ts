@@ -7,8 +7,6 @@ import { NextApiRequest, NextApiResponse } from "next"
 export interface IPlaylist {
     name: string
     url: string
-    likeCount: number
-    cover: string
     userId: string
     ownerName: string
     tracks: string[]
@@ -24,10 +22,21 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             return res.status(401).json({ error: 'Unauthorized' });
         }
 
-        const { name, url, cover, tracks } = req.body;
+        const { name, url, cover, tracks } = req.body as {
+            name: string,
+            url: string,
+            cover: string,
+            tracks: string[],
+        };
 
         if (!name || !url || !cover || !tracks) {
             return res.status(400).json({ error: 'Please provide all required fields' });
+        }
+
+        const allowedChars = /(^[a-zA-Z0-9_\-#@\(\)\ ]+$)/;
+
+        if (!allowedChars.test(name.trim())) {
+            return res.status(400).json({ error: 'Name contains invalid characters' });
         }
 
         const user = await User.findOne({ auth0Id: session.user.sub });
@@ -43,10 +52,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         }
 
         const playlist: IPlaylist = {
-            name,
+            name: name.trim(),
             url,
-            likeCount: 0,
-            cover,
             userId: user._id,
             ownerName: user.name,
             tracks,

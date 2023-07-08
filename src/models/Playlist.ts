@@ -10,14 +10,6 @@ const PlaylistSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Please provide a playlist url'],
     },
-    likeCount: {
-        type: Number,
-        default: 0
-    },
-    cover: {
-        type: String,
-        required: [true, 'Please provide a playlist cover'],
-    },
     userId: {
         type: String,
         required: [true, 'Please provide a userId'],
