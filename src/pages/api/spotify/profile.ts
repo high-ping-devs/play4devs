@@ -1,4 +1,4 @@
-import { getAuth0UserInfo } from "@/utils/getAuth0UserInfo"
+import { getAuth0UserInfo } from "@/lib/utils/getAuth0UserInfo"
 import { getSession } from "@auth0/nextjs-auth0"
 import { NextApiRequest, NextApiResponse } from "next"
 
@@ -23,4 +23,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             images: spotifyIDPInfo.images,
         })
     }
+
+    return res.status(405).json({ error: 'Method not allowed' });
 }
