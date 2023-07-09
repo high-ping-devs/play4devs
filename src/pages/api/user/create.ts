@@ -24,21 +24,26 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const user = await User.findOne({ auth0Id: session.user.sub });
 
         if (!user) {
-            const info = await getAuth0UserInfo(session)
-            const user: IUser = {
-                auth0Id: session.user.sub,
-                spotifyId: info.spotifyId,
-                name: info.name,
-                image: info.image
-            };
+            try {
+                const info = await getAuth0UserInfo(session)
 
-            const newUser = await User.create(user);
+                const user: IUser = {
+                    auth0Id: session.user.sub,
+                    spotifyId: info.uri.split(':')[2],
+                    name: info.name,
+                    image: info.picture || info.images[0].url || ''
+                };
 
-            return res.status(201).json({ User: newUser });
-        } else {
-            return res.status(409).json({ error: 'User already exists' });
+                const newUser = await User.create(user);
+
+                return res.status(201).json({ User: newUser });
+            } catch (error) {
+                console.error(error)
+                return res.status(500).json({ error: 'Something went wrong', errorTrace: error });
+            }
         }
 
+        return res.status(409).json({ error: 'User already exists' });
     }
 
     return res.status(405).json({ error: 'Method not allowed' });
