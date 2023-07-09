@@ -1,4 +1,3 @@
-import { useSession } from "next-auth/react";
 import { useState, useEffect } from "react";
 
 export function useSpotifyTracks(playlistId: string, limit: number, offset: number) {
