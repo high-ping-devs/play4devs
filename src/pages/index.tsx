@@ -31,7 +31,7 @@ export default function Component() {
       {
         img: "https://images.unsplash.com/photo-1546527868-ccb7ee7dfa6a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
         username: "User 1",
-        name: "Playlist 1",
+        name: "Playlist 1 gchghgkckhgfkhgghfkfkghjlgjkghjhkjgk",
       },
       {
         img: "https://images.unsplash.com/photo-1546527868-ccb7ee7dfa6a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
@@ -58,18 +58,17 @@ export default function Component() {
           </span>
           <img width={88} height={1} src="/assets/logo.svg" alt="Logo" />
         </h1>
+        <div className="flex">
+          <input type="text" id="input" placeholder="Procurando algo?" className="w-full border-2 rounded-md p-2 mx-3 text-gray text-sm" />
+        </div>
+        <div>Gêneros</div>
 
-        <div className="border-2 rounded">Busca</div>
-
-        <div>Estilos</div>
-
-        <ul className="flex flex-wrap gap-5 mx-5 justify-center mobile:justify-normal">
+        <ul className="flex flex-wrap gap-y-5 mx-5 justify-center">
           {playlists &&
             playlists.map((playlist, index) => (
-              <li key={index}>
+              <li key={index} className="w-40">
                 <PlaylistPreview
                   imgUrl={playlist.img}
-                  imgHeight={index % 2 === 0 ? "h-40" : "h-44"}
                   username={playlist.username}
                   playlistName={playlist.name}
                 />
@@ -111,6 +110,15 @@ export default function Component() {
           <summary>Playlist</summary>
           <pre>{!playlistError && JSON.stringify(playlist, null, 2)}</pre>
         </details>
+
+        <style jsx>
+          {`
+            input {
+              background: url("/assets/Search.svg") no-repeat scroll 7px 7px;
+              padding-left: 30px;
+            }
+          `}
+        </style>
       </>
     );
   } else {

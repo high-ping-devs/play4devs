@@ -2,17 +2,18 @@ import Image from "next/image";
 
 export default function Login() {
   return (
-    <div className="mobile:bg-white mobile:flex mobile:flex-col mobile:justify-center mobile:items-center mobile:w-screen mobile:h-screen">
+    <div className="bg-white flex flex-col justify-center items-center w-screen h-screen">
       <Image width={88} height={1} src="/assets/logo.svg" alt="Logo"></Image>
-      <h1 className="mobile:text-black mobile:font-semibold mobile:text-2xl mobile:px-6 mobile:text-center mobile:mt-14 mobile:pb-2">
+      <h1 className="text-black font-semibold text-2xl px-6 text-center mt-14 pb-2">
         Boas-vindas ao play4devs!
       </h1>
-      <p className="mobile:text-[#323232] mobile:font-normal mobile:text-base mobile:px-10 mobile:text-center">
+      <p className="text-gray font-normal text-base px-10 text-center">
         Compartilhe suas playlists favoritas para programar
       </p>
       <a
         href="/api/auth/login"
-        className="mobile:w-80 mobile:h-14 mobile:bg-green mobile:border-2 mobile:border-black mobile:border-solid mobile:rounded-lg mobile:mt-14 mobile:px-4 mobile:shadow-boxShadow flex justify-center items-center text-base font-semibold text-black"
+        className="min-w-[50%] max-w-[20rem] h-14 bg-green border-2 border-black border-solid rounded-lg 
+        mt-14 ml-4 mr-4 px-4 shadow-boxShadow flex justify-center items-center text-base font-semibold text-black"
       >
         Entrar
       </a>
