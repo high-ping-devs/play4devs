@@ -1,0 +1,7 @@
+services:
+  play4devs:
+    image: joevtap/play4devs
+    env_file:
+      - .env.local
+    ports:
+      - "3000:8080"
