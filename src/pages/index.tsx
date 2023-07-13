@@ -59,7 +59,12 @@ export default function Component() {
           <img width={88} height={1} src="/assets/logo.svg" alt="Logo" />
         </h1>
         <div className="flex">
-          <input type="text" id="input" placeholder="Procurando algo?" className="w-full border-2 rounded-md p-2 mx-3 text-gray text-sm" />
+          <input
+            type="text"
+            id="input"
+            placeholder="Procurando algo?"
+            className="w-full border-2 rounded-md p-2 mx-3 text-gray text-sm"
+          />
         </div>
         <div>Gêneros</div>
 
@@ -119,6 +124,8 @@ export default function Component() {
             }
           `}
         </style>
+
+        <p>{JSON.stringify(usersPlaylists, null, 2)}</p>
       </>
     );
   } else {

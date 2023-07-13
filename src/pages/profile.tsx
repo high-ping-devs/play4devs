@@ -4,6 +4,7 @@ import UserProfileImage from "@/components/UserProfileImage";
 import LikeButton from "@/components/LikeButton";
 import { useSpotifyTracks, useSpotifyUserPlaylists } from "@/hooks/spotify";
 import { useUser } from "@auth0/nextjs-auth0/client";
+import Track from "@/components/Track";
 
 export default function profile() {
   const [playlist, playlistError] = useSpotifyUserPlaylists(1, 0);
@@ -52,26 +53,14 @@ export default function profile() {
           Ouvir no Spotify <img src="/assets/Redirect.svg" alt="Redirecionar" />
         </a>
       </div>
-      <section className="flex w-screen justify-center pt-4">
-        <div className="flex justify-center mobile:w-80">
-          <img
-            className=" flex justify-center items-center pr-4"
-            src="/assets/trackPicture.png"
-            alt="Capa da música"
-          />
-          <div className="flex flex-col pr-8 justify-center items-start">
-            <span className="font-semibold text-sm text-black">
-              Let There Be Light Again
-            </span>
-            <span className="font-normal text-xs text-[#323232]">
-              OFFICIAL HIGE DANDISM
-            </span>
-          </div>
-          <span className="flex justify-center items-center text-sm font-normal">
-            4:20
-          </span>
-        </div>
-      </section>
+      <div className="flex flex-col w-screen justify-center items-center pt-4">
+        <Track
+          artist="The Sunset Rollercoaster"
+          title="Let There Be Light Again"
+          time="4:00"
+        />
+        <Track artist="The Weeknd" title="Blinding Lights" time="3:20" />
+      </div>
     </div>
   );
 }
