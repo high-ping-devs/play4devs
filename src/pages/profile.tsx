@@ -19,6 +19,7 @@ export default function profile() {
   return (
     <div>
       <Header />
+      <div className="w-screen h-32 bg-[#C5C5C5] border-b-2"></div>
       {playlist && (
         <img
           src={dadosPlaylist?.images[0].url}
