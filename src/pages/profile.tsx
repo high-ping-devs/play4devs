@@ -2,13 +2,21 @@ import Header from "@/components/Header";
 import React from "react";
 import UserProfileImage from "@/components/UserProfileImage";
 import LikeButton from "@/components/LikeButton";
-import { useSpotifyTracks, useSpotifyUserPlaylists } from "@/hooks/spotify";
+import {
+  useSpotifyPlaylist,
+  useSpotifyTracks,
+  useSpotifyUserPlaylists,
+} from "@/hooks/spotify";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import Track from "@/components/Track";
 
 export default function profile() {
-  const [playlist, playlistError] = useSpotifyUserPlaylists(1, 0);
+  const [playlist, playlistError] = useSpotifyUserPlaylists(15, 0);
+  const [IdPlaylist, playlistErrorrrr] = useSpotifyPlaylist(
+    "3W90dR5oQhXTxlZ8Kp6RRz"
+  );
   const { user } = useUser();
+  console.log(IdPlaylist);
 
   let dadosPlaylist = null;
   if (playlist) {
@@ -20,13 +28,6 @@ export default function profile() {
     <div>
       <Header />
       <div className="w-screen h-32 bg-[#C5C5C5] border-b-2"></div>
-      {playlist && (
-        <img
-          src={dadosPlaylist?.images[0].url}
-          alt="Capa da Playlist"
-          className="w-full object-cover object-center h-32 border-y-2"
-        />
-      )}
       <UserProfileImage width={88} transform="-translate-y-12" margin="ml-5" />
       <div className="flex justify-between mx-5">
         <div className="flex">
