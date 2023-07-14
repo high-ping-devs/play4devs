@@ -8,10 +8,10 @@ export default function Header() {
 
   if (user) {
     return (
-      <header className="flex justify-between py-3 px-3 border-b-2">
+      <header className="flex justify-between py-3 px-3 border-b-2 tabletL:justify-center tabletL:gap-[700px]">
         <a
           href="/"
-          className="self-center font-medium font-sans"
+          className="self-end font-medium font-sans text-base"
           style={{ fontFamily: roboto.style.fontFamily }}
         >
           play4devs

@@ -8,13 +8,14 @@ module.exports = {
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
-      screens: {
-        'mobileS': '320px',
-        'mobileM': '390px',
-        'mobileL': '450px',
-        'tablet': '800px',
-        ...defaultTheme.screens,
-      },
+    screens: {
+      'mobileS': '320px',
+      'mobileM': '390px',
+      'mobileL': '450px',
+      'tablet': '800px',
+      'tabletL': '864px',
+      ...defaultTheme.screens,
+    },
     extend: {
       boxShadow: {
         'boxShadow': '2px 2px 0px 0px rgba(0, 0, 0, 1)',
