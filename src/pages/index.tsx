@@ -28,13 +28,13 @@ export default function Component() {
     return (
       <>
         <Header />
-        <h1 className="flex justify-between px-3 mb-5">
+        <h1 className="flex justify-between px-3 mb-5 max-w-3xl mx-auto py-14">
           <span className="text-lg font-semibold self-center">
             Descubra playlists dos seus colegas ao redor do mundo
           </span>
           <img width={88} height={1} src="/assets/logo.svg" alt="Logo" />
         </h1>
-        <div className="flex justify-between ml-3">
+        <div className="flex justify-between max-w-3xl mx-auto">
           <input
             onChange={handleSearch}
             type="text"
@@ -52,10 +52,10 @@ export default function Component() {
         <ul className="flex justify-center items-center">
           <div className="grid grid-cols-2  sm:grid-cols-3 md:grid-cols-4  gap-4 mobileL:gap-8 md:gap-9 mx-5 mt-6">
             {searchPlaylistResults &&
-            searchPlaylistResults.results.length > 0 ? (
+              searchPlaylistResults.results.length > 0 ? (
               searchPlaylistResults.results.map(
                 (
-                  playlist: { cover: string; ownerName: string; name: string },
+                  playlist: { cover: string; ownerName: string; name: string, url: string },
                   index: Key
                 ) => (
                   <li key={index} className="w-40">
@@ -63,6 +63,7 @@ export default function Component() {
                       imgUrl={playlist.cover}
                       username={playlist.ownerName}
                       playlistName={playlist.name}
+                      url={playlist.url}
                     />
                   </li>
                 )
@@ -70,7 +71,7 @@ export default function Component() {
             ) : allPlaylists && searchQuery === "" ? (
               allPlaylists.playlists.map(
                 (
-                  playlist: { cover: string; username: string; name: string },
+                  playlist: { cover: string; username: string; name: string, url: string },
                   index: Key
                 ) => (
                   <li key={index} className="w-40">
@@ -78,6 +79,7 @@ export default function Component() {
                       imgUrl={playlist.cover}
                       username={playlist.username}
                       playlistName={playlist.name}
+                      url={playlist.url}
                     />
                   </li>
                 )
