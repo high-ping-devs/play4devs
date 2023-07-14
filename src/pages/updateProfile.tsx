@@ -27,6 +27,7 @@ export default function updateProfile() {
   const handleDeleteButtonClick = () => {
     if (confirming) {
       // Chamar API pra excluir perfil
+      window.location.href = '/login';
       setConfirmed(true);
     } else {
       setConfirming(true);
