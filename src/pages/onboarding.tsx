@@ -25,10 +25,12 @@ export default function Onboarding() {
     setSelectedPlaylist({ ...selectedPlaylist, name: nomePlaylist });
   };
 
-  if (usersPlaylists) {
+  if (user && usersPlaylists) {
+    console.log(user);
     usersPlaylists.items
       .filter((playlist) => playlist.public)
       .map((playlist) => {
+        console.log(playlist);
         playlists.push({
           id: playlist.id,
           name: playlist.name,
@@ -87,6 +89,7 @@ export default function Onboarding() {
                 type="button"
                 onClick={() => {
                   window.location.href = '/'
+
                 }}
               >
                 Criar perfil
