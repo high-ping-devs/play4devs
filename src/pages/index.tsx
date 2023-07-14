@@ -3,6 +3,7 @@ import Login from "./login";
 import Header from "@/components/Header";
 import { ChangeEvent, useEffect, useState } from "react";
 import { usePlaylistSearch } from "@/hooks/playlist";
+import PlaylistPreview from "@/components/PlaylistPreview";
 
 export default function Component() {
   const { user, error, isLoading } = useUser();
@@ -20,7 +21,7 @@ export default function Component() {
 
     setSearchQuery(e.target.value)
   }
-
+  const listaImaginaria = [1, 2, 3, 4, 5, 6, 7, 8, 9]
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>{error.message}</div>;
 
@@ -49,17 +50,20 @@ export default function Component() {
           {JSON.stringify(searchPlaylistResults)}
         </pre>
 
-        <ul className="flex flex-wrap gap-y-5 mx-5 justify-center">
-          {/* {playlists &&
-            playlists.map((playlist, index) => (
-              <li key={index} className="w-40">
-                <PlaylistPreview
-                  imgUrl={playlist.img}
-                  username={playlist.username}
-                  playlistName={playlist.name}
-                />
-              </li>
-            ))} */}
+
+        <ul className="flex justify-center items-center ">
+          <div className="grid grid-cols-2  sm:grid-cols-3 md:grid-cols-4  gap-4 mobileL:gap-8 md:gap-9 mx-5 mt-6">
+            {listaImaginaria &&
+              listaImaginaria.map((playlist, index) => (
+                <li key={index} className="flex justify-center">
+                  <PlaylistPreview
+                    imgUrl="https://github.com/joevtap.png"
+                    username="jKvothe"
+                    playlistName="Músicas tristes para ouvir no banho"
+                  />
+                </li>
+              ))}
+          </div>
         </ul>
 
         <a href="/api/auth/logout">Sign out</a>
