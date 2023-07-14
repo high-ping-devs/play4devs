@@ -16,7 +16,7 @@ export default function Header() {
         >
           play4devs
         </a>
-        <a href="/profile">
+        <a href="/api/auth/logout">
           <UserProfileImage width={50} />
         </a>
       </header>
