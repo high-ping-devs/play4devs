@@ -71,13 +71,13 @@ export default function Component() {
             ) : allPlaylists && searchQuery === "" ? (
               allPlaylists.playlists.map(
                 (
-                  playlist: { cover: string; username: string; name: string, url: string },
+                  playlist: { cover: string; ownerName: string; name: string, url: string },
                   index: Key
                 ) => (
                   <li key={index} className="w-40">
                     <PlaylistPreview
                       imgUrl={playlist.cover}
-                      username={playlist.username}
+                      username={playlist.ownerName}
                       playlistName={playlist.name}
                       url={playlist.url}
                     />
