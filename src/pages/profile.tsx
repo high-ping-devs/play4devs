@@ -35,36 +35,44 @@ export default function profile() {
     <div>
       <Header />
       <div className="w-screen h-32 bg-[#C5C5C5] border-b-2"></div>
-      <UserProfileImage width={88} transform="-translate-y-12" margin="ml-5" />
-      <div className="flex justify-between mx-5">
-        <div className="flex">
-          <img
-            src="/assets/spotify.svg"
-            alt="Logo do spotify"
-            className="w-6"
-          />
-          <span className="self-center text-base font-semibold">
-            {user?.name}
-          </span>
+      <div className="flex  justify-center items-center w-full">
+        <div className="flex justify-center items-center w-[800px]">
+          <div className="flex flex-col justify-center items-start tablet:w-[660px] mobileS:w-[90%] mobileM:w-[93%] mobileL:w-[85%]">
+            <UserProfileImage width={88} transform="-translate-y-12" />
+            <div className="flex gap-2">
+              <img
+                src="/assets/spotify.svg"
+                alt="Logo do spotify"
+                className="w-6"
+              />
+              <span className="self-center text-base font-semibold">
+                {user?.name}
+              </span>
+            </div>
+            {/* {dadosPlaylist?.name} */}
+            <div className="flex flex-col my-1">
+              <span className="font-semibold text-base ">
+                Músicas tristes para alegrar a noite
+              </span>
+              <span className="text-gray text-sm">
+                {/* {dadosPlaylist?.tracks.total} faixas */}
+                35 faixas
+              </span>
+            </div>
+            <a
+              href={dadosPlaylist?.external_urls.spotify}
+              target="_blank"
+              className="flex gap-1 text-sm hover:underline"
+            >
+              Ouvir no Spotify{" "}
+              <img src="/assets/Redirect.svg" alt="Redirecionar" />
+            </a>
+          </div>
         </div>
-        <LikeButton transform="-translate-y-12" />
       </div>
-      <div className="flex flex-col mx-5">
-        <span className="font-semibold text-base">{dadosPlaylist?.name}</span>
-        <span className="text-gray text-sm mb-4">
-          {dadosPlaylist?.tracks.total} faixas
-        </span>
-        <a
-          href={dadosPlaylist?.external_urls.spotify}
-          target="_blank"
-          className="flex gap-1 text-sm hover:underline"
-        >
-          Ouvir no Spotify <img src="/assets/Redirect.svg" alt="Redirecionar" />
-        </a>
-      </div>
-      <div className="flex flex-col w-screen justify-center items-center pt-4">
+      <div className="flex flex-col w-full justify-center items-center pt-4">
         {listaImaginaria.map((track, index) => {
-          if (index < 3) {
+          if (index < 7) {
             return (
               <li
                 key={index}
@@ -79,7 +87,7 @@ export default function profile() {
               </li>
             );
           }
-          if (index == 4) {
+          if (index == 8) {
             return (
               <div className="flex justify-center items-center my-6">
                 <img src="assets/Dots.svg" alt="Três pontos" />
