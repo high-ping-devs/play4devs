@@ -38,5 +38,6 @@ next-env.d.ts
 .do-terraform-deploy/terraform.tfvars
 .do-terraform-deploy/terraform.tfstate
 .do-terraform-deploy/terraform.tfstate.backup
-.do-terraform-deploy/.terraform
 .do-terraform-deploy/.terraform.lock.hcl
+.do-terraform-deploy/.terraform.tfstate.lock.info
+.do-terraform-deploy/.terraform
