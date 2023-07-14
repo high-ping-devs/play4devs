@@ -1,7 +1,6 @@
 import Header from "@/components/Header";
 import React from "react";
 import UserProfileImage from "@/components/UserProfileImage";
-import LikeButton from "@/components/LikeButton";
 import {
   useSpotifyPlaylist,
   useSpotifyTracks,
@@ -10,6 +9,7 @@ import {
 import { useUser } from "@auth0/nextjs-auth0/client";
 import Track from "@/components/Track";
 import { log } from "console";
+import IconButton from "@/components/iconButton";
 
 export default function profile() {
   // const [playlist, playlistError] = useSpotifyUserPlaylists(1, 0);
@@ -34,7 +34,9 @@ export default function profile() {
   return (
     <div>
       <Header />
-      <div className="w-full h-32 bg-[#C5C5C5] border-b-2"></div>
+      <div className="w-full h-32 bg-[#C5C5C5] border-b-2">
+        <IconButton icon="/assets/Edit.svg" color="bg-green" altText="" linkRed=""/>
+      </div>
       <div className="flex  justify-center items-center w-full">
         <div className="flex justify-center items-center w-[800px]">
           <div className="flex flex-col justify-center items-start tablet:w-[660px] mobileS:w-[90%] mobileM:w-[93%] mobileL:w-[85%]">
