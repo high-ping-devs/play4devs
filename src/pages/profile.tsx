@@ -12,15 +12,15 @@ import Track from "@/components/Track";
 import { log } from "console";
 
 export default function profile() {
-  const [playlist, playlistError] = useSpotifyUserPlaylists(1, 0);
-  const [tracks, tracksError] = useSpotifyTracks(playlist?.items[0].id, 10, 0);
+  // const [playlist, playlistError] = useSpotifyUserPlaylists(1, 0);
+  // const [tracks, tracksError] = useSpotifyTracks(playlist?.items[0].id, 10, 0);
   const { user } = useUser();
 
   const listaImaginaria = [1, 2, 3, 4, 5, 6, 7, 8, 9];
   let dadosPlaylist = null;
-  if (playlist) {
-    dadosPlaylist = playlist.items[0];
-  }
+  // if (playlist) {
+  //   dadosPlaylist = playlist.items[0];
+  // }
 
   function milissegundosParaMinutosFormatado(milissegundos) {
     const minutos = Math.floor(milissegundos / 1000 / 60);
@@ -34,14 +34,14 @@ export default function profile() {
   return (
     <div>
       <Header />
-      <div className="w-screen h-32 bg-[#C5C5C5] border-b-2"></div>
+      <div className="w-full h-32 bg-[#C5C5C5] border-b-2"></div>
       <div className="flex  justify-center items-center w-full">
         <div className="flex justify-center items-center w-[800px]">
           <div className="flex flex-col justify-center items-start tablet:w-[660px] mobileS:w-[90%] mobileM:w-[93%] mobileL:w-[85%]">
             <UserProfileImage width={88} transform="-translate-y-12" />
             <div className="flex gap-2">
               <img
-                src="/assets/spotify.svg"
+                src="/assets/Spotify.svg"
                 alt="Logo do spotify"
                 className="w-6"
               />
@@ -76,7 +76,7 @@ export default function profile() {
             return (
               <li
                 key={index}
-                className="flex flex-col w-screen justify-center items-center pt-4"
+                className="flex flex-col w-full justify-center items-center pt-4"
               >
                 <Track
                   image="https://images.genius.com/1e7aa66cc320566574cc1ed14b3f85a8.1000x1000x1.jpg"
@@ -93,8 +93,6 @@ export default function profile() {
                 <img src="assets/Dots.svg" alt="Três pontos" />
               </div>
             );
-          } else {
-            return null;
           }
         })}
         <button className="flex justify-center items-center mobileS:w-[90%] max-w-[326px]  h-14 bg-green mb-8 shadow-boxShadow rounded-[0.25rem] gap-2">
@@ -102,7 +100,7 @@ export default function profile() {
             Ouvir no Spotify
           </span>
           <img
-            src="/assets/spotify.svg"
+            src="/assets/Spotify.svg"
             alt="Logo do spotify"
             className="w-6"
           />

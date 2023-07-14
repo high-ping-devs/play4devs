@@ -24,7 +24,7 @@ export default function UserProfileImage({
             }
             width={width}
             alt="Perfil"
-            className={`rounded-full shadow-boxShadow object-cover ${transform} ${margin}`}
+            className={`rounded-full shadow-boxShadow object-cover aspect-square ${transform ? transform : ''}${margin ? margin : ''}`}
           />
         )}
       </>
