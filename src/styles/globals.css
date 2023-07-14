@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .img-frame {
+    border-radius: 0.25rem;
+    object-fit: cover;
+  }
+}

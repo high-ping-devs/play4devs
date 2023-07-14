@@ -9,7 +9,10 @@ module.exports = {
   ],
   theme: {
       screens: {
-        'mobile': '320px',
+        'mobileS': '320px',
+        'mobileM': '390px',
+        'mobileL': '450px',
+        'tablet': '800px',
         ...defaultTheme.screens,
       },
     extend: {
