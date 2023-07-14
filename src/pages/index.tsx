@@ -1,27 +1,25 @@
-import {
-  useSpotifyUserPlaylists,
-  useSpotifyTracks,
-  useSpotifyPlaylist,
-  useSpotifyProfile,
-} from "@/hooks/spotify";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import Login from "./login";
-import PlaylistPreview from "@/components/PlaylistPreview";
 import Header from "@/components/Header";
+import { ChangeEvent, useEffect, useState } from "react";
+import { usePlaylistSearch } from "@/hooks/playlist";
 
 export default function Component() {
-  const [usersPlaylists, usersPlaylistsError] = useSpotifyUserPlaylists(1, 0);
-  const [tracks, tracksError] = useSpotifyTracks(
-    "0A6utctOZywAbYz2xwULAd",
-    5,
-    0
-  );
-  const [playlist, playlistError] = useSpotifyPlaylist(
-    "0A6utctOZywAbYz2xwULAd"
-  );
-  const [spotifyProfile, spotifyProfileError] = useSpotifyProfile();
-
   const { user, error, isLoading } = useUser();
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [searchPlaylist, searchPlaylistResults, _] = usePlaylistSearch()
+
+  useEffect(() => {
+    if (searchQuery && searchQuery.length >= 3) {
+      searchPlaylist(searchQuery)
+    }
+  }, [searchQuery])
+
+  function handleSearch(e: ChangeEvent<HTMLInputElement>) {
+    e.preventDefault()
+
+    setSearchQuery(e.target.value)
+  }
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>{error.message}</div>;
@@ -38,6 +36,7 @@ export default function Component() {
         </h1>
         <div className="flex">
           <input
+            onChange={handleSearch}
             type="text"
             id="input"
             placeholder="Procurando algo?"
@@ -45,6 +44,10 @@ export default function Component() {
           />
         </div>
         <div>Gêneros</div>
+
+        <pre>
+          {JSON.stringify(searchPlaylistResults)}
+        </pre>
 
         <ul className="flex flex-wrap gap-y-5 mx-5 justify-center">
           {/* {playlists &&
@@ -61,27 +64,6 @@ export default function Component() {
 
         <a href="/api/auth/logout">Sign out</a>
 
-        <details>
-          <summary>Playlists</summary>
-          <pre>
-            {!usersPlaylistsError && JSON.stringify(usersPlaylists, null, 2)}
-          </pre>
-        </details>
-
-        <details>
-          <summary>Tracks</summary>
-          <audio
-            controls
-            src={!tracksError ? tracks?.items[1].track?.preview_url! : ""}
-          ></audio>
-          <pre>{!tracksError && JSON.stringify(tracks, null, 2)}</pre>
-        </details>
-
-        <details>
-          <summary>Playlist</summary>
-          <pre>{!playlistError && JSON.stringify(playlist, null, 2)}</pre>
-        </details>
-
         <style jsx>
           {`
             input {
@@ -90,8 +72,6 @@ export default function Component() {
             }
           `}
         </style>
-
-        {/* <p>{JSON.stringify(usersPlaylists, null, 2)}</p> */}
       </>
     );
   } else {
