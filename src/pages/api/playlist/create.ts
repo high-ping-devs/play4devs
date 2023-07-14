@@ -9,6 +9,7 @@ export interface IPlaylist {
     url: string
     userId: string
     ownerName: string
+    cover: string
     tracks: string[]
 }
 
@@ -22,13 +23,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             return res.status(401).json({ error: 'Unauthorized' });
         }
 
-        const { name, url, tracks } = req.body as {
+        const { name, url, tracks, cover } = req.body as {
             name: string,
             url: string,
+            cover: string
             tracks: string[],
         };
 
-        if (!name || !url || !tracks) {
+        if (!name || !url || !tracks || !cover) {
             return res.status(400).json({ error: 'Please provide all required fields' });
         }
 
@@ -53,6 +55,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const playlist: IPlaylist = {
             name: name.trim(),
             url,
+            cover,
             userId: user._id,
             ownerName: user.name,
             tracks,
