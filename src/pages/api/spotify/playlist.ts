@@ -1,4 +1,4 @@
-import { getAuth0UserInfo } from "@/lib/utils/getAuth0UserInfo"
+import { getAuth0UserInfo } from "@/lib/utils/auth0ManagementAPI"
 import { getSession } from "@auth0/nextjs-auth0"
 import { NextApiRequest, NextApiResponse } from "next"
 

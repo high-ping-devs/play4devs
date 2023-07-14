@@ -1,6 +1,6 @@
 import dbConnect from "@/lib/dbConnect"
 import User from "@/models/User"
-import { getAuth0UserInfo } from "@/lib/utils/getAuth0UserInfo"
+import { getAuth0UserInfo, setUserIDAuth0AppMetadata } from "@/lib/utils/auth0ManagementAPI"
 import { getSession } from "@auth0/nextjs-auth0"
 import { NextApiRequest, NextApiResponse } from "next"
 
@@ -31,10 +31,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     auth0Id: session.user.sub,
                     spotifyId: info.uri.split(':')[2],
                     name: info.name,
-                    image: info.picture || info.images[0].url || ''
+                    image: info.images[0].url || info.picture || ''
                 };
 
                 const newUser = await User.create(user);
+
+                await setUserIDAuth0AppMetadata(session, newUser._id);
 
                 return res.status(201).json({ User: newUser });
             } catch (error) {
