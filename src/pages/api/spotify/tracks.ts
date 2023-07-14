@@ -18,8 +18,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             }
         })
 
-        console.log((await getAuth0UserInfo(session)).identities?.find((identity: { connection: string }) => identity.connection === 'spotify')?.access_token)
-
         if (spotifyApiResponse.status === 200) {
             return res.status(200).json(await spotifyApiResponse.json())
         }
