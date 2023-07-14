@@ -10,6 +10,7 @@ import { useUser } from "@auth0/nextjs-auth0/client";
 import Track from "@/components/Track";
 import { log } from "console";
 import IconButton from "@/components/iconButton";
+import SmallButton from "@/components/SmallButton";
 
 export default function profile() {
   // const [playlist, playlistError] = useSpotifyUserPlaylists(1, 0);
@@ -34,8 +35,13 @@ export default function profile() {
   return (
     <div>
       <Header />
-      <div className="w-full h-32 bg-[#C5C5C5] border-b-2">
-        <IconButton icon="/assets/Edit.svg" color="bg-green" altText="" linkRed=""/>
+      <div className="w-full flex h-32 bg-[#C5C5C5] border-b-2 justify-center">
+        <div className="flex justify-end tablet:w-[660px] mobileS:w-[90%] mobileM:w-[93%] mobileL:w-[85%]">
+          <div className="flex justify-between w-[96px] pt-4">
+            <IconButton icon="/assets/Edit.svg" color="bg-green" altText="" linkRed=""/>
+            <IconButton icon="/assets/Logout.svg" color="bg-[#FFAF75]" altText="" linkRed=""/>
+          </div>
+        </div>
       </div>
       <div className="flex  justify-center items-center w-full">
         <div className="flex justify-center items-center w-[800px]">
@@ -97,17 +103,19 @@ export default function profile() {
             );
           }
         })}
-        <button className="flex justify-center items-center mobileS:w-[90%] max-w-[326px]  h-14 bg-green mb-8 shadow-boxShadow rounded-[0.25rem] gap-2">
-          <span className="text-base font-semibold leading-5 text-black">
-            Ouvir no Spotify
-          </span>
-          <img
-            src="/assets/Spotify.svg"
-            alt="Logo do spotify"
-            className="w-6"
-          />
-        </button>
+        <SmallButton 
+          btnText="Ouvir no Spotify"
+          sufixIcon="/assets/Spotify.svg"
+          altTextSufix="Logo do spotify"
+          color="bg-green"
+          btnFunction={nomeDaFuncao}
+          
+        />
       </div>
     </div>
   );
+
+  function nomeDaFuncao () {
+    console.log('Eu estou funcionando')
+  }
 }
