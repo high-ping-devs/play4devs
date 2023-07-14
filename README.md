@@ -12,8 +12,10 @@ Compartilhe sua playlist favorita para ouvir enquanto desenvolve. Veja a playlis
 - TailwindCSS
 - Auth0 (AaaS)
 - MongoDB Atlas (DBasS)
+- Mongoose (ODM)
 - Terraform (IaC)
 - Digital Ocean (Cloud Provider)
+- Docker
 
 ## Variáveis de ambiente (.env.local)
 
