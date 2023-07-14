@@ -1,7 +1,16 @@
+import Playlist from "@/models/Playlist";
 import { useEffect, useState } from "react";
 
+interface PlaylistSearch {
+    results: [];
+}
+
+interface allPlaylists {
+    playlists: [];
+}
+
 export function usePlaylistSearch() {
-    const [playlists, setPlaylists] = useState();
+    const [playlists, setPlaylists] = useState<PlaylistSearch>();
     const [error, setError] = useState<null | string>();
 
     const search = async (q: string) => {
@@ -65,7 +74,7 @@ export function useGetPlaylistByUserId(userId: string) {
 }
 
 export function useGetAllPlaylists(limit: number, offset: number) {
-    const [playlist, setPlaylist] = useState();
+    const [playlist, setPlaylist] = useState<allPlaylists>();
     const [error, setError] = useState<null | string>();
 
     useEffect(() => {
