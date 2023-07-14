@@ -10,6 +10,10 @@ const PlaylistSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Please provide a playlist url'],
     },
+    cover: {
+        type: String,
+        require: [true, 'Please provide a cover url']
+    },
     userId: {
         type: String,
         required: [true, 'Please provide a userId'],

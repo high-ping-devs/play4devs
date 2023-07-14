@@ -48,13 +48,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             return res.status(401).json({ error: 'Unauthorized' });
         }
 
-        const { name, url, tracks } = req.body as {
+        const { name, url, tracks, cover } = req.body as {
             name: string,
             url: string,
             tracks: string[],
+            cover: string
         };
 
-        if (!name || !url || !tracks) {
+        if (!name || !url || !tracks || !cover) {
             return res.status(400).json({ error: 'Please provide all required fields' });
         }
 
@@ -93,6 +94,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             url,
             userId: user._id,
             ownerName: user.name,
+            cover,
             tracks,
         };
 
