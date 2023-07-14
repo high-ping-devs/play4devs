@@ -1,9 +1,14 @@
+import Image from "next/image";
+
 export default function Track(props: any) {
   return (
     <div className="flex justify-center mobileS:w-[100%] max-w-[800px] h-12 mb-4">
-      <img
-        className=" flex justify-center items-center pr-4"
-        src="/assets/trackPicture.png"
+      <Image
+        className=" flex justify-center items-center mr-4 img-frame shadow-boxShadow"
+        loader={() => props.image}
+        src={props.image}
+        width={48}
+        height={1}
         alt="Capa da música"
       />
       <div className="flex flex-col pr-8 justify-center items-start mobileM:w-[70%] mobileS:w-[60%] gap-1">

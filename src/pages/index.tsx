@@ -27,28 +27,6 @@ export default function Component() {
   if (error) return <div>{error.message}</div>;
 
   if (user) {
-    const playlists = [
-      {
-        img: "https://images.unsplash.com/photo-1546527868-ccb7ee7dfa6a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
-        username: "User 1",
-        name: "Playlist 1 gchghgkckhgfkhgghfkfkghjlgjkghjhkjgk",
-      },
-      {
-        img: "https://images.unsplash.com/photo-1546527868-ccb7ee7dfa6a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
-        username: "User 2",
-        name: "Playlist 2",
-      },
-      {
-        img: "https://images.unsplash.com/photo-1546527868-ccb7ee7dfa6a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
-        username: "User 3",
-        name: "Playlist 3",
-      },
-      {
-        img: "https://images.unsplash.com/photo-1546527868-ccb7ee7dfa6a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
-        username: "User 4",
-        name: "Playlist 4",
-      },
-    ];
     return (
       <>
         <Header />
@@ -69,7 +47,7 @@ export default function Component() {
         <div>Gêneros</div>
 
         <ul className="flex flex-wrap gap-y-5 mx-5 justify-center">
-          {playlists &&
+          {/* {playlists &&
             playlists.map((playlist, index) => (
               <li key={index} className="w-40">
                 <PlaylistPreview
@@ -78,20 +56,8 @@ export default function Component() {
                   playlistName={playlist.name}
                 />
               </li>
-            ))}
+            ))} */}
         </ul>
-
-        {/* Usado para testes */}
-        {spotifyProfile && (
-          <img
-            src={
-              spotifyProfile.images[0]
-                ? spotifyProfile.images[0].url
-                : user.picture
-            }
-            alt="alt"
-          />
-        )}
 
         <a href="/api/auth/logout">Sign out</a>
 
@@ -125,7 +91,7 @@ export default function Component() {
           `}
         </style>
 
-        <p>{JSON.stringify(usersPlaylists, null, 2)}</p>
+        {/* <p>{JSON.stringify(usersPlaylists, null, 2)}</p> */}
       </>
     );
   } else {
