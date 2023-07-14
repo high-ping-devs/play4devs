@@ -12,15 +12,19 @@ import Track from "@/components/Track";
 import { log } from "console";
 
 export default function profile() {
-  // const [playlist, playlistError] = useSpotifyUserPlaylists(1, 0);
-  // const [tracks, tracksError] = useSpotifyTracks(playlist?.items[0].id, 10, 0);
-  const { user } = useUser();
+  const [playlist, playlistError] = useSpotifyUserPlaylists(1, 0);
+  const [tracks, tracksError] = useSpotifyTracks(playlist?.items[0].id, 7, 0);
 
-  const listaImaginaria = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+  const { user } = useUser();
+  console.log(playlist?.items[0].id);
+  console.log(tracks);
+
+
+
   let dadosPlaylist = null;
-  // if (playlist) {
-  //   dadosPlaylist = playlist.items[0];
-  // }
+  if (playlist) {
+    dadosPlaylist = playlist.items[0];
+  }
 
   function milissegundosParaMinutosFormatado(milissegundos) {
     const minutos = Math.floor(milissegundos / 1000 / 60);
@@ -52,11 +56,11 @@ export default function profile() {
             {/* {dadosPlaylist?.name} */}
             <div className="flex flex-col my-1">
               <span className="font-semibold text-base ">
-                Músicas tristes para alegrar a noite
+                {dadosPlaylist?.name}
               </span>
               <span className="text-gray text-sm">
-                {/* {dadosPlaylist?.tracks.total} faixas */}
-                35 faixas
+                {dadosPlaylist?.tracks.total} faixas
+
               </span>
             </div>
             <a
@@ -71,7 +75,7 @@ export default function profile() {
         </div>
       </div>
       <div className="flex flex-col w-full justify-center items-center pt-4">
-        {listaImaginaria.map((track, index) => {
+        {tracks?.items.map((track, index) => {
           if (index < 7) {
             return (
               <li
@@ -79,10 +83,10 @@ export default function profile() {
                 className="flex flex-col w-full justify-center items-center pt-4"
               >
                 <Track
-                  image="https://images.genius.com/1e7aa66cc320566574cc1ed14b3f85a8.1000x1000x1.jpg"
-                  artist="Sunset Rollercoaster"
-                  title="Let There Be Light Again"
-                  time="4:20"
+                  image={track.track.album.images[0].url}
+                  artist={track.track.artists[0].name}
+                  title={track.track.name}
+                  time={milissegundosParaMinutosFormatado(track.track.duration_ms)}
                 />
               </li>
             );
