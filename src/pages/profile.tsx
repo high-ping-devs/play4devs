@@ -1,32 +1,18 @@
 import Header from "@/components/Header";
 import React from "react";
 import UserProfileImage from "@/components/UserProfileImage";
-import LikeButton from "@/components/LikeButton";
-import {
-  useSpotifyPlaylist,
-  useSpotifyTracks,
-  useSpotifyUserPlaylists,
-} from "@/hooks/spotify";
+import { useSpotifyPlaylist } from "@/hooks/spotify";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import Track from "@/components/Track";
-import { log } from "console";
 
 export default function profile() {
-  const [playlist, playlistError] = useSpotifyUserPlaylists(1, 0);
-  const [tracks, tracksError] = useSpotifyTracks(playlist?.items[0].id, 7, 0);
+  const [playlist, _] = useSpotifyPlaylist(
+    "0ntsMu3HZmcOe8jN7wuixk"
+  );
 
   const { user } = useUser();
-  console.log(playlist?.items[0].id);
-  console.log(tracks);
 
-
-
-  let dadosPlaylist = null;
-  if (playlist) {
-    dadosPlaylist = playlist.items[0];
-  }
-
-  function milissegundosParaMinutosFormatado(milissegundos) {
+  function milissegundosParaMinutosFormatado(milissegundos: number) {
     const minutos = Math.floor(milissegundos / 1000 / 60);
     const segundos = Math.floor((milissegundos / 1000) % 60);
 
@@ -53,18 +39,14 @@ export default function profile() {
                 {user?.name}
               </span>
             </div>
-            {/* {dadosPlaylist?.name} */}
             <div className="flex flex-col my-1">
-              <span className="font-semibold text-base ">
-                {dadosPlaylist?.name}
-              </span>
+              <span className="font-semibold text-base ">{playlist?.name}</span>
               <span className="text-gray text-sm">
-                {dadosPlaylist?.tracks.total} faixas
-
+                {playlist?.tracks.total} faixas
               </span>
             </div>
             <a
-              href={dadosPlaylist?.external_urls.spotify}
+              href={playlist?.external_urls.spotify}
               target="_blank"
               className="flex gap-1 text-sm hover:underline"
             >
@@ -75,7 +57,7 @@ export default function profile() {
         </div>
       </div>
       <div className="flex flex-col w-full justify-center items-center pt-4">
-        {tracks?.items.map((track, index) => {
+        {playlist?.tracks.items.map((track, index) => {
           if (index < 7) {
             return (
               <li
@@ -86,7 +68,9 @@ export default function profile() {
                   image={track.track.album.images[0].url}
                   artist={track.track.artists[0].name}
                   title={track.track.name}
-                  time={milissegundosParaMinutosFormatado(track.track.duration_ms)}
+                  time={milissegundosParaMinutosFormatado(
+                    track.track.duration_ms
+                  )}
                 />
               </li>
             );
