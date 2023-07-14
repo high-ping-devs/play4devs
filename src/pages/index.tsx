@@ -1,27 +1,27 @@
 import { useUser } from "@auth0/nextjs-auth0/client";
 import Login from "./login";
 import Header from "@/components/Header";
-import { ChangeEvent, useEffect, useState } from "react";
-import { usePlaylistSearch } from "@/hooks/playlist";
+import { ChangeEvent, Key, useEffect, useState } from "react";
+import { useGetAllPlaylists, usePlaylistSearch } from "@/hooks/playlist";
 import PlaylistPreview from "@/components/PlaylistPreview";
 
 export default function Component() {
   const { user, error, isLoading } = useUser();
-  const [searchQuery, setSearchQuery] = useState<string>('');
-  const [searchPlaylist, searchPlaylistResults, _] = usePlaylistSearch()
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [allPlaylists, errorAllPlaylists] = useGetAllPlaylists(999, 0);
+  const [searchPlaylist, searchPlaylistResults, _] = usePlaylistSearch();
 
   useEffect(() => {
     if (searchQuery && searchQuery.length >= 3) {
-      searchPlaylist(searchQuery)
+      searchPlaylist(searchQuery);
     }
-  }, [searchQuery])
+  }, [searchQuery]);
 
   function handleSearch(e: ChangeEvent<HTMLInputElement>) {
-    e.preventDefault()
-
-    setSearchQuery(e.target.value)
+    e.preventDefault();
+    setSearchQuery(e.target.value);
   }
-  const listaImaginaria = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+  const listaImaginaria = [1, 2, 3, 4, 5, 6, 7, 8, 9];
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>{error.message}</div>;
 
@@ -35,47 +35,63 @@ export default function Component() {
           </span>
           <img width={88} height={1} src="/assets/logo.svg" alt="Logo" />
         </h1>
-        <div className="flex">
+        <div className="flex justify-between ml-3">
           <input
             onChange={handleSearch}
             type="text"
             id="input"
             placeholder="Procurando algo?"
-            className="w-full border-2 rounded-md p-2 mx-3 text-gray text-sm"
+            className="w-full p-2 border-2 rounded-md text-gray text-sm"
+          />
+          <img
+            className="-translate-x-8"
+            src="assets/Search.svg"
+            alt="Buscar playlist ou usuário"
           />
         </div>
-        <div>Gêneros</div>
 
-        <pre>
-          {JSON.stringify(searchPlaylistResults)}
-        </pre>
-
+        <pre>{JSON.stringify(searchPlaylistResults)}</pre>
 
         <ul className="flex justify-center items-center ">
           <div className="grid grid-cols-2  sm:grid-cols-3 md:grid-cols-4  gap-4 mobileL:gap-8 md:gap-9 mx-5 mt-6">
-            {listaImaginaria &&
-              listaImaginaria.map((playlist, index) => (
-                <li key={index} className="flex justify-center">
-                  <PlaylistPreview
-                    imgUrl="https://github.com/joevtap.png"
-                    username="jKvothe"
-                    playlistName="Músicas tristes para ouvir no banho"
-                  />
-                </li>
-              ))}
+            {searchPlaylistResults &&
+            searchPlaylistResults.results.length > 0 ? (
+              searchPlaylistResults.results.map(
+                (
+                  playlist: { cover: string; ownerName: string; name: string },
+                  index: Key
+                ) => (
+                  <li key={index} className="w-40">
+                    <PlaylistPreview
+                      imgUrl={playlist.cover}
+                      username={playlist.ownerName}
+                      playlistName={playlist.name}
+                    />
+                  </li>
+                )
+              )
+            ) : allPlaylists && searchQuery === "" ? (
+              allPlaylists.playlists.map(
+                (
+                  playlist: { cover: string; username: string; name: string },
+                  index: Key
+                ) => (
+                  <li key={index} className="w-40">
+                    <PlaylistPreview
+                      imgUrl={playlist.cover}
+                      username={playlist.username}
+                      playlistName={playlist.name}
+                    />
+                  </li>
+                )
+              )
+            ) : (
+              <li>Nenhuma playlist encontrada</li>
+            )}
           </div>
         </ul>
 
         <a href="/api/auth/logout">Sign out</a>
-
-        <style jsx>
-          {`
-            input {
-              background: url("/assets/Search.svg") no-repeat scroll 7px 7px;
-              padding-left: 30px;
-            }
-          `}
-        </style>
       </>
     );
   } else {
