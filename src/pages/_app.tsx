@@ -1,14 +1,20 @@
-import '@/styles/globals.css'
-import type { AppProps } from 'next/app'
-import { SessionProvider } from "next-auth/react"
+import "@/styles/globals.css";
+import type { AppProps } from "next/app";
+import { UserProvider } from "@auth0/nextjs-auth0/client";
+import { Inter } from "next/font/google";
+const inter = Inter({ subsets: ["latin"] });
 
-export default function App({
-  Component,
-  pageProps: { session, ...pageProps },
-}: AppProps) {
+export default function App({ Component, pageProps }: AppProps) {
   return (
-    <SessionProvider session={session}>
-      <Component {...pageProps} />
-    </SessionProvider>
-  )
+    <>
+      <style jsx global>{`
+        html {
+          font-family: ${inter.style.fontFamily};
+        }
+      `}</style>
+      <UserProvider>
+        <Component {...pageProps} />
+      </UserProvider>
+    </>
+  );
 }

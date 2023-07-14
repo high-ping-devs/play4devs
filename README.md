@@ -1,34 +1,70 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+# Play4devs
 
-First, run the development server:
+Compartilhe sua playlist favorita para ouvir enquanto desenvolve. Veja a playlist dos seus colegas desenvolvedores ao redor do mundo.
+
+[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
+
+## Soluções utilizadas
+
+- Next.js (Fullstack/Monorepo Framework)
+- Typescript
+- TailwindCSS
+- Auth0 (AaaS)
+- MongoDB Atlas (DBasS)
+- Terraform (IaC)
+- Digital Ocean (Cloud Provider)
+
+## Variáveis de ambiente (.env.local)
+
+Para rodar esse projeto, você vai precisar adicionar as seguintes variáveis de ambiente no seu .env
+
+Para rodar esse projeto localmente será preciso criar um arquivo `.env.local` na raíz do projeto.
+
+Para isso, em ambientes baseados em UNIX, use o comando `cp`:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+cp .env.example .env.local
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+As variáveis de ambiente necessárias estão listadas no arquivo. São elas:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+`SPOTIFY_CLIENT_ID`
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+`SPOTIFY_CLIENT_SECRET`
 
-## Learn More
+(Valores obtidos ao criar uma aplicação em [https://developer.spotify.com/](https://developer.spotify.com/))
 
-To learn more about Next.js, take a look at the following resources:
+`AUTH0_SECRET`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+`AUTH0_CLIENT_ID`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+`AUTH0_CLIENT_SECRET`
 
-## Deploy on Vercel
+`AUTH0_BASE_URL` Valor padrão `${APP_URL}` (Deploy na Digital Ocean)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+`AUTH0_ISSUER_BASE_URL`
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+`AUTH0_DOMAIN`
+
+(Valores obtidos ao configurar o Tenant e aplicação, como indicado em [https://auth0.com/docs/quickstart/webapp/nextjs/interactive](https://auth0.com/docs/quickstart/webapp/nextjs/interactive))
+
+`AUTH0_API_CLIENT_ID`
+
+`AUTH0_API_CLIENT_SECRET`
+
+(Valores obtidos ao configurar uma aplicação M2M sob o mesmo Tenant no Auth0. Isso pode ser feito seguindo o guia em [https://auth0.com/docs/manage-users/user-search/retrieve-users-with-get-users-endpoint](https://auth0.com/docs/manage-users/user-search/retrieve-users-with-get-users-endpoint))
+
+
+`MONGODB_URI`
+
+(URL de conexão para um cluster do MongoDB. Um cluster pode ser criado gratuitamente (para testes) em [https://www.mongodb.com/atlas/database](https://www.mongodb.com/atlas/database))
+
+## Autores
+
+- [@AugustoBenteu](https://github.com/AugustoBenteu)
+- [@CaiqueBrandani](https://github.com/CaiqueBrandani)
+- [@GianlucaBorges](https://github.com/GianlucaBorges)
+- [@JoaoLucasLD](https://github.com/JoaoLucasLD)
+- [@joevtap](https://github.com/joevtap)
+

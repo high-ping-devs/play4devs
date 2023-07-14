@@ -1,50 +1,88 @@
-import { useSpotifyPlaylist, useSpotifyProfile, useSpotifyTracks, useSpotifyUserPlaylists } from "@/hooks/spotify"
-import { signIn, signOut } from "next-auth/react"
+import { useUser } from "@auth0/nextjs-auth0/client";
+import Login from "./login";
+import Header from "@/components/Header";
+import { ChangeEvent, useEffect, useState } from "react";
+import { usePlaylistSearch } from "@/hooks/playlist";
+import PlaylistPreview from "@/components/PlaylistPreview";
 
 export default function Component() {
-  const profile = useSpotifyProfile()
-  const [usersPlaylists, usersPlaylistsError] = useSpotifyUserPlaylists(1, 0)
-  const [tracks, tracksError] = useSpotifyTracks('0A6utctOZywAbYz2xwULAd', 5, 0)
-  const [playlist, playlistError] = useSpotifyPlaylist('0A6utctOZywAbYz2xwULAd')
+  const { user, error, isLoading } = useUser();
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [searchPlaylist, searchPlaylistResults, _] = usePlaylistSearch()
 
-  if (profile) {
+  useEffect(() => {
+    if (searchQuery && searchQuery.length >= 3) {
+      searchPlaylist(searchQuery)
+    }
+  }, [searchQuery])
+
+  function handleSearch(e: ChangeEvent<HTMLInputElement>) {
+    e.preventDefault()
+
+    setSearchQuery(e.target.value)
+  }
+  const listaImaginaria = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>{error.message}</div>;
+
+  if (user) {
     return (
       <>
-        <h1>
-          Signed in as {profile.name}
+        <Header />
+        <h1 className="flex justify-between px-3 mb-5">
+          <span className="text-lg font-semibold self-center">
+            Descubra playlists dos seus colegas ao redor do mundo
+          </span>
+          <img width={88} height={1} src="/assets/logo.svg" alt="Logo" />
         </h1>
+        <div className="flex">
+          <input
+            onChange={handleSearch}
+            type="text"
+            id="input"
+            placeholder="Procurando algo?"
+            className="w-full border-2 rounded-md p-2 mx-3 text-gray text-sm"
+          />
+        </div>
+        <div>Gêneros</div>
 
-        <img src={profile.image} alt={profile.name} />
+        <pre>
+          {JSON.stringify(searchPlaylistResults)}
+        </pre>
 
-        <p>{profile.email}</p>
-        <p>{profile.id}</p>
 
-        <button onClick={() => signOut()}>Sign out</button>
+        <ul className="flex justify-center items-center ">
+          <div className="grid grid-cols-2  sm:grid-cols-3 md:grid-cols-4  gap-4 mobileL:gap-8 md:gap-9 mx-5 mt-6">
+            {listaImaginaria &&
+              listaImaginaria.map((playlist, index) => (
+                <li key={index} className="flex justify-center">
+                  <PlaylistPreview
+                    imgUrl="https://github.com/joevtap.png"
+                    username="jKvothe"
+                    playlistName="Músicas tristes para ouvir no banho"
+                  />
+                </li>
+              ))}
+          </div>
+        </ul>
 
-        <details>
-          <summary>Playlists</summary>
-          <img src={!usersPlaylistsError ? usersPlaylists?.items[0].images[0].url : ''} alt="" />
-          <pre>{!usersPlaylistsError && JSON.stringify(usersPlaylists, null, 2)}</pre>
-        </details>
+        <a href="/api/auth/logout">Sign out</a>
 
-        <details>
-          <summary>Tracks</summary>
-          <audio controls src={!tracksError ? tracks?.items[1].track?.preview_url! : ''}></audio>
-
-          <pre>{!tracksError && JSON.stringify(tracks, null, 2)}</pre>
-        </details>
-
-        <details>
-          <summary>Playlist</summary>
-          <pre>{!playlistError && JSON.stringify(playlist, null, 2)}</pre>
-        </details>
+        <style jsx>
+          {`
+            input {
+              background: url("/assets/Search.svg") no-repeat scroll 7px 7px;
+              padding-left: 30px;
+            }
+          `}
+        </style>
       </>
-    )
+    );
+  } else {
+    return (
+      <>
+        <Login />
+      </>
+    );
   }
-  return (
-    <>
-      Not signed in <br />
-      <button onClick={() => signIn()}>Sign in</button>
-    </>
-  )
 }
