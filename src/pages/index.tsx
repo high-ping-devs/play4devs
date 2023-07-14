@@ -21,7 +21,6 @@ export default function Component() {
     e.preventDefault();
     setSearchQuery(e.target.value);
   }
-  const listaImaginaria = [1, 2, 3, 4, 5, 6, 7, 8, 9];
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>{error.message}</div>;
 
@@ -50,9 +49,7 @@ export default function Component() {
           />
         </div>
 
-        <pre>{JSON.stringify(searchPlaylistResults)}</pre>
-
-        <ul className="flex justify-center items-center ">
+        <ul className="flex justify-center items-center">
           <div className="grid grid-cols-2  sm:grid-cols-3 md:grid-cols-4  gap-4 mobileL:gap-8 md:gap-9 mx-5 mt-6">
             {searchPlaylistResults &&
             searchPlaylistResults.results.length > 0 ? (
@@ -90,8 +87,6 @@ export default function Component() {
             )}
           </div>
         </ul>
-
-        <a href="/api/auth/logout">Sign out</a>
       </>
     );
   } else {
